@@ -27,7 +27,17 @@ class ViewController: UIViewController {
         
         skeletonView.backgroundColor = .white
         view.addSubview(skeletonView)
-        skeletonView.frame = CGRect(x: 0, y: 10, width: view.bounds.width, height: 250)
+        
+        let viewHeight = view.frame.height
+        
+        let cellHeight: CGFloat = 250
+        
+        let numberOfCells = Int(viewHeight / 250 + 1)
+        
+        let skeletonViewHeight = cellHeight * CGFloat(numberOfCells)
+        
+        
+        skeletonView.frame = CGRect(x: 0, y: 10, width: view.bounds.width, height: skeletonViewHeight)
         
         let backgroundGradientLayer = CAGradientLayer()
         
@@ -49,7 +59,7 @@ class ViewController: UIViewController {
         gradientAnimation.fromValue = [0.0, 0.0, 0.25]
         gradientAnimation.toValue = [0.65, 1.0, 1.0]
         
-        gradientAnimation.duration = 1
+        gradientAnimation.duration = 1.5
         
         gradientAnimation.repeatCount = .greatestFiniteMagnitude
         gradientAnimation.fillMode = CAMediaTimingFillMode.forwards
@@ -59,27 +69,39 @@ class ViewController: UIViewController {
         
         
         let  skeletonFrame = UIBezierPath()
+        let gutterHeight = CGFloat(10)
         
-        let profileFrame = UIBezierPath(ovalIn: CGRect(x: 20, y: 10, width: 60, height: 60))
-        skeletonFrame.append(profileFrame)
-        
-        let titleFrame = UIBezierPath(rect: CGRect(x: 90, y: 20, width: view.bounds.width * 0.6 - 90, height: 8))
-        skeletonFrame.append(titleFrame)
-        
-        let subTitleFrame = UIBezierPath(rect: CGRect(x: 90, y: 40, width: view.bounds.width * 0.4 - 90, height: 8))
-        skeletonFrame.append(subTitleFrame)
-        
-        let contentFrame1 = UIBezierPath(rect: (CGRect(x: 20, y: 100, width: view.bounds.width * 0.65, height: 8)))
-        
-        skeletonFrame.append(contentFrame1)
-        
-        
-        let contentFrame2 = UIBezierPath(rect: CGRect(x: 20, y: 120, width: view.bounds.width * 0.75, height: 8))
-        skeletonFrame.append(contentFrame2)
-        
-        let contenFrame3 = UIBezierPath(rect: CGRect(x: 20, y: 140, width: view.bounds.width * 0.4, height: 8))
-        
-        skeletonFrame.append(contenFrame3)
+        for i in 0...numberOfCells {
+            
+            let offset = CGFloat(i) * cellHeight
+            
+            let profileFrame = UIBezierPath(ovalIn: CGRect(x: 20, y: 10 + offset, width: 60, height: 60))
+            skeletonFrame.append(profileFrame)
+            
+            let titleFrame = UIBezierPath(rect: CGRect(x: 90, y: 20 + offset, width: view.bounds.width * 0.6 - 90, height: 8))
+            skeletonFrame.append(titleFrame)
+            
+            let subTitleFrame = UIBezierPath(rect: CGRect(x: 90, y: 40 + offset, width: view.bounds.width * 0.4 - 90, height: 8))
+            skeletonFrame.append(subTitleFrame)
+            
+            let contentFrame1 = UIBezierPath(rect: (CGRect(x: 20, y: 100 + offset, width: view.bounds.width * 0.65, height: 8)))
+            
+            skeletonFrame.append(contentFrame1)
+            
+            
+            let contentFrame2 = UIBezierPath(rect: CGRect(x: 20, y: 120 + offset, width: view.bounds.width * 0.75, height: 8))
+            skeletonFrame.append(contentFrame2)
+            
+            let contenFrame3 = UIBezierPath(rect: CGRect(x: 20, y: 140 + offset, width: view.bounds.width * 0.4, height: 8))
+            
+            skeletonFrame.append(contenFrame3)
+            
+            let gutter = UIView(frame: CGRect(x: 0, y: (cellHeight - gutterHeight) + offset, width: view.bounds.width, height: gutterHeight))
+            
+            gutter.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
+            skeletonView.addSubview(gutter)
+            
+        }
         
         let skeltonShape = CAShapeLayer()
         
@@ -90,11 +112,6 @@ class ViewController: UIViewController {
         skeltonShape.frame = skeletonView.bounds
         
         backgroundGradientLayer.mask = skeltonShape
-    
-        
-        
-        
-        
         
     }
     
