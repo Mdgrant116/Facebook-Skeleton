@@ -57,6 +57,45 @@ class ViewController: UIViewController {
         
         backgroundGradientLayer.add(gradientAnimation, forKey: nil)
         
+        
+        let  skeletonFrame = UIBezierPath()
+        
+        let profileFrame = UIBezierPath(ovalIn: CGRect(x: 20, y: 10, width: 60, height: 60))
+        skeletonFrame.append(profileFrame)
+        
+        let titleFrame = UIBezierPath(rect: CGRect(x: 90, y: 20, width: view.bounds.width * 0.6 - 90, height: 8))
+        skeletonFrame.append(titleFrame)
+        
+        let subTitleFrame = UIBezierPath(rect: CGRect(x: 90, y: 40, width: view.bounds.width * 0.4 - 90, height: 8))
+        skeletonFrame.append(subTitleFrame)
+        
+        let contentFrame1 = UIBezierPath(rect: (CGRect(x: 20, y: 100, width: view.bounds.width * 0.65, height: 8)))
+        
+        skeletonFrame.append(contentFrame1)
+        
+        
+        let contentFrame2 = UIBezierPath(rect: CGRect(x: 20, y: 120, width: view.bounds.width * 0.75, height: 8))
+        skeletonFrame.append(contentFrame2)
+        
+        let contenFrame3 = UIBezierPath(rect: CGRect(x: 20, y: 140, width: view.bounds.width * 0.4, height: 8))
+        
+        skeletonFrame.append(contenFrame3)
+        
+        let skeltonShape = CAShapeLayer()
+        
+        skeltonShape.path = skeletonFrame.cgPath
+        
+        skeltonShape.fillColor = UIColor.black.cgColor
+        
+        skeltonShape.frame = skeletonView.bounds
+        
+        backgroundGradientLayer.mask = skeltonShape
+    
+        
+        
+        
+        
+        
     }
     
 }
